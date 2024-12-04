@@ -20,13 +20,18 @@ const schema = yup
 const Login = () => {
   const {
     control,
+    handleSubmit,
     formState: { errors, isValid },
   } = useForm<IFormLogin>({
     resolver: yupResolver(schema),
-    mode: "onBlur",
+    mode: "onChange",
     defaultValues,
     reValidateMode: "onChange",
   });
+
+  const handleOnClick = (dados: IFormLogin) => {
+    console.log("Login Concluído");
+  }
 
   return (
     <Container>
@@ -49,7 +54,7 @@ const Login = () => {
             errorMessage={errors?.password?.message}
           />
           <Spacing />
-          <Button title="Entrar" />
+          <Button title="Entrar" onClick={handleSubmit(handleOnClick)} disabled={!isValid} />
         </Column>
       </LoginContainer>
     </Container>
